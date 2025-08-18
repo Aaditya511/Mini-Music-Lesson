@@ -19,6 +19,12 @@ A demo Android app for music lessons built with Jetpack Compose, MVVM, Clean Arc
 
 ---
 
+<h2>🎥 Demo Video</h2>
+
+👉 [Watch the Demo](https://drive.google.com/file/d/1b-kwAq9FSoqKu709w6CuE67obxCIzokh/view)  
+
+---
+
 <h2>📂 Project Structure</h2>
 
 ```bash
@@ -30,9 +36,6 @@ app/
  ┃ ┣ model/              # Lesson models
  ┃ ┣ remote/             # API services
  ┃ ┗ retrofitObject/     # RetrofitObject
- ┣ domain/
- ┃ ┣ model/              # Domain models
- ┃ ┗ repository/         # Abstract repository interfaces
  ┣ di/                   # Hilt modules
  ┣ presentation/
  ┃ ┣ home/               # Home screen UI + ViewModel
