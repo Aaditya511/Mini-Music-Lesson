@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App theme -->
+    <style name="Theme.MiniMusicLesson" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Your existing theme customizations (if any) -->
+    </style>
+
+    <!-- Splash screen theme -->
+    <style name="Theme.MiniMusicLesson.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app</item>
+        <item name="postSplashScreenTheme">@style/Theme.MiniMusicLesson</item>
+    </style>
+</resources>
