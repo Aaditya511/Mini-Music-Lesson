@@ -21,11 +21,9 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(Screen.DetailPage.route) {
-            // SavedStateHandle se lesson get karo
             val lesson = navController.previousBackStackEntry
                 ?.savedStateHandle
                 ?.get<Lesson>("lesson")
-
             DetailPageScreen(navController, lesson)
         }
     }
