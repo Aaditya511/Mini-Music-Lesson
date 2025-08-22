@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.minimusiclesson.R
 import com.example.minimusiclesson.data.model.Lesson
-import com.example.minimusiclesson.presentation.common.CommonScreenEvents
-import com.example.minimusiclesson.presentation.common.CommonUiStates
+import com.example.minimusiclesson.presentation.common.ScreenEvents
+import com.example.minimusiclesson.presentation.common.UIState
 import com.example.minimusiclesson.presentation.common.LessonItem
 import com.example.minimusiclesson.presentation.common.UploadBottomSheetContent
 
@@ -54,11 +54,11 @@ fun HomePageScreen(
     LaunchedEffect(Unit) {
         viewModel.commonScreensEvents.collect { event ->
             when (event) {
-                is CommonScreenEvents.ShowSnackbarEvent -> {
+                is ScreenEvents.ShowSnackbarEvent -> {
                     snackbarHostState.showSnackbar(event.message)
                 }
 
-                is CommonScreenEvents.NavigationEvent<*> -> {
+                is ScreenEvents.NavigationEvent<*> -> {
                     event.data?.let { data ->
                         navController.currentBackStackEntry?.savedStateHandle?.set("lesson", data)
                     }
@@ -86,8 +86,8 @@ fun HomePageScreen(
 
             // Screen UI
             when (uiState) {
-                is CommonUiStates.InitialState -> Unit
-                is CommonUiStates.Loading -> {
+                is UIState.InitialState -> Unit
+                is UIState.Loading -> {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -98,8 +98,8 @@ fun HomePageScreen(
                     }
                 }
 
-                is CommonUiStates.Success -> {
-                    val lessons = (uiState as CommonUiStates.Success<List<Lesson>>).data
+                is UIState.Success -> {
+                    val lessons = (uiState as UIState.Success<List<Lesson>>).data
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -115,8 +115,8 @@ fun HomePageScreen(
                     }
                 }
 
-                is CommonUiStates.Error -> {
-                    val message = (uiState as CommonUiStates.Error).message
+                is UIState.Error -> {
+                    val message = (uiState as UIState.Error).message
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

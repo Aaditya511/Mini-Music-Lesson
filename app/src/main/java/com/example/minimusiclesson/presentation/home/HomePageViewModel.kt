@@ -3,12 +3,12 @@ package com.example.minimusiclesson.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.minimusiclesson.core.network.ApiResponse
-import com.example.minimusiclesson.core.network.NetworkChecker
+import com.example.minimusiclesson.core.network.NetworkUtils
 import com.example.minimusiclesson.core.utils.callApi
 import com.example.minimusiclesson.data.model.Lesson
 import com.example.minimusiclesson.data.repository.Repo
-import com.example.minimusiclesson.presentation.common.CommonScreenEvents
-import com.example.minimusiclesson.presentation.common.CommonUiStates
+import com.example.minimusiclesson.presentation.common.ScreenEvents
+import com.example.minimusiclesson.presentation.common.UIState
 import com.example.minimusiclesson.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -25,17 +25,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomePageViewModel @Inject constructor(
     private val repository: Repo,
-    private val networkChecker: NetworkChecker
+    private val networkChecker: NetworkUtils
 ) : ViewModel() {
 
     private val _uploadState = MutableStateFlow<UploadState>(UploadState.Idle)
     val uploadState: StateFlow<UploadState> = _uploadState.asStateFlow()
     private val _screenState =
-        MutableStateFlow<CommonUiStates<List<Lesson>>>(CommonUiStates.InitialState)
-    val screenState: StateFlow<CommonUiStates<List<Lesson>>> = _screenState.asStateFlow()
+        MutableStateFlow<UIState<List<Lesson>>>(UIState.InitialState)
+    val screenState: StateFlow<UIState<List<Lesson>>> = _screenState.asStateFlow()
 
-    private val _commonScreensEvents = MutableSharedFlow<CommonScreenEvents>()
-    val commonScreensEvents: SharedFlow<CommonScreenEvents> = _commonScreensEvents.asSharedFlow()
+    private val _commonScreensEvents = MutableSharedFlow<ScreenEvents>()
+    val commonScreensEvents: SharedFlow<ScreenEvents> = _commonScreensEvents.asSharedFlow()
 
 
     init {
@@ -45,25 +45,25 @@ class HomePageViewModel @Inject constructor(
     private fun getLessons() {
         viewModelScope.launch {
 
-            _screenState.value = CommonUiStates.Loading
+            _screenState.value = UIState.Loading
 
             val result = callApi(networkChecker = networkChecker) { repository.getLessons() }
             when (result) {
-                is ApiResponse.OnApiSuccess -> {
+                is ApiResponse.Success -> {
                     val lessonsList = result.data["lessons"] ?: emptyList()
                     if (lessonsList.isEmpty()) {
-                        _screenState.value = CommonUiStates.Error("No lessons available")
+                        _screenState.value = UIState.Error("No lessons available")
                         _commonScreensEvents.emit(
-                            CommonScreenEvents.ShowSnackbarEvent("No lessons available")
+                            ScreenEvents.ShowSnackbarEvent("No lessons available")
                         )
                     } else {
-                        _screenState.value = CommonUiStates.Success(lessonsList)
+                        _screenState.value = UIState.Success(lessonsList)
                     }
                 }
 
-                is ApiResponse.OnApiError -> {
-                    _screenState.value = CommonUiStates.Error(result.message)
-                    _commonScreensEvents.emit(CommonScreenEvents.ShowSnackbarEvent(result.message))
+                is ApiResponse.Error -> {
+                    _screenState.value = UIState.Error(result.message)
+                    _commonScreensEvents.emit(ScreenEvents.ShowSnackbarEvent(result.message))
                 }
             }
         }
@@ -73,7 +73,7 @@ class HomePageViewModel @Inject constructor(
     fun onLessonClick(lesson: Lesson) {
         viewModelScope.launch {
             _commonScreensEvents.emit(
-                CommonScreenEvents.NavigationEvent(
+                ScreenEvents.NavigationEvent(
                     route = Screen.DetailPage.route,
                     data = lesson
                 )

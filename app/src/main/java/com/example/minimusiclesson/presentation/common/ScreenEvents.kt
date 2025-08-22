@@ -1,11 +1,11 @@
 package com.example.minimusiclesson.presentation.common
 
-sealed class CommonScreenEvents {
+sealed class ScreenEvents {
     data class NavigationEvent<T>(
         val route: String,
         val data: T? = null
-    ) : CommonScreenEvents()
+    ) : ScreenEvents()
 
-    data class ShowSnackbarEvent(val message: String) : CommonScreenEvents()
+    data class ShowSnackbarEvent(val message: String) : ScreenEvents()
 
 }

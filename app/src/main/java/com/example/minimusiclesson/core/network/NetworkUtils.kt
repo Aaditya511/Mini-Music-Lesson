@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import javax.inject.Inject
 
-class NetworkChecker @Inject constructor(
+class NetworkUtils @Inject constructor(
     private val context: Context
 ) {
     fun isInternetAvailable(): Boolean {

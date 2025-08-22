@@ -1,9 +1,9 @@
 package com.example.minimusiclesson.di
 
 import android.content.Context
-import com.example.minimusiclesson.core.network.NetworkChecker
+import com.example.minimusiclesson.core.network.NetworkUtils
 import com.example.minimusiclesson.data.remote.ApiService
-import com.example.minimusiclesson.data.remote.RetrofitObject
+import com.example.minimusiclesson.data.remote.APIHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,15 +19,15 @@ object DiModule {
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
-        return RetrofitObject().getInstance()
+        return APIHelper().getInstance()
     }
 
     @Provides
     @Singleton
     fun provideNetworkChecker(
         @ApplicationContext context: Context,
-    ): NetworkChecker {
-        return NetworkChecker(context)
+    ): NetworkUtils {
+        return NetworkUtils(context)
     }
 
 }
