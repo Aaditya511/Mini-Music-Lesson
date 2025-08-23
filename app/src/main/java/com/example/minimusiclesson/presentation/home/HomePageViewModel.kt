@@ -6,7 +6,7 @@ import com.example.minimusiclesson.core.network.ApiResponse
 import com.example.minimusiclesson.core.network.NetworkUtils
 import com.example.minimusiclesson.core.utils.callApi
 import com.example.minimusiclesson.data.model.Lesson
-import com.example.minimusiclesson.data.repository.Repo
+import com.example.minimusiclesson.data.repository.Repository
 import com.example.minimusiclesson.presentation.common.ScreenEvents
 import com.example.minimusiclesson.presentation.common.UIState
 import com.example.minimusiclesson.presentation.navigation.Screen
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomePageViewModel @Inject constructor(
-    private val repository: Repo,
+    private val repository: Repository,
     private val networkChecker: NetworkUtils
 ) : ViewModel() {
 

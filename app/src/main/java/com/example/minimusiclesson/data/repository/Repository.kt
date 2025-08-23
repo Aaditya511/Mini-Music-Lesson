@@ -5,7 +5,7 @@ import com.example.minimusiclesson.data.remote.ApiService
 import retrofit2.Response
 import javax.inject.Inject
 
-class Repo @Inject constructor(private val apiService: ApiService) {
+class Repository @Inject constructor(private val apiService: ApiService) {
     suspend fun getLessons(): Response<Map<String, List<Lesson>>> {
         return apiService.getLessons()
     }
